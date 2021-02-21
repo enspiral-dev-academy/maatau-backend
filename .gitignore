@@ -1,5 +1,6 @@
 tsconfig-only-handler.json
 samconfig.toml
+local-dynamodb
 node_modules
 .aws-sam
 env.json
