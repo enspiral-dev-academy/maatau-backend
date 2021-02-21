@@ -4,13 +4,13 @@ This project contains source code and supporting files for a serverless applicat
 
 - `src` - Code for the application's Lambda function written in TypeScript.
 - `events` - Invocation events that you can use to invoke the function.
-- `__tests__` - Unit tests for the application code. 
+- `__tests__` - Unit tests for the application code.
 - `template.yml` - A template that defines the application's AWS resources.
 
 The application uses several AWS resources, including Lambda functions and API Gateway API. These resources are defined in the `template.yml` file in this project. You can update the template to add AWS resources through the same deployment process that updates your application code.
 
 If you prefer to use an integrated development environment (IDE) to build and test your application, you can use the AWS Toolkit.
-The AWS Toolkit is an open-source plugin for popular IDEs that uses the AWS SAM CLI to build and deploy serverless applications on AWS. The AWS Toolkit also adds step-through debugging for Lambda function code. 
+The AWS Toolkit is an open-source plugin for popular IDEs that uses the AWS SAM CLI to build and deploy serverless applications on AWS. The AWS Toolkit also adds step-through debugging for Lambda function code.
 
 To get started, see the following:
 
@@ -147,7 +147,7 @@ Resources:
       Handler: src/handlers/example.exampleHandler
       Runtime: nodejs14.x
       DeadLetterQueue:
-        Type: SQS 
+        Type: SQS
         TargetArn: !GetAtt MyQueue.Arn
       Policies:
         - SQSSendMessagePolicy:
