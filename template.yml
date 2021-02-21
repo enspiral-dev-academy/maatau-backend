@@ -17,9 +17,11 @@ Globals:
     Layers:
       - !Ref RuntimeDependenciesLayer
     Environment:
-      # # Environment variables used by every function
-      # Variables:
+      # Environment variables used by every function
       MAATAU_TABLE: !Ref MaatauTable
+      # Not sure if this is really needed or if AWS_SAM_LOCAL is
+      # provided automatically when running sam locally
+      AWS_SAM_LOCAL: false
     Runtime: nodejs14.x
     MemorySize: 128
     Timeout: 100
