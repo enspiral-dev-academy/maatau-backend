@@ -1,3 +1,5 @@
+tsconfig-only-handler.json
+samconfig.toml
 node_modules
 .aws-sam
 env.json
