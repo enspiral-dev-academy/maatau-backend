@@ -18,7 +18,8 @@ Globals:
       - !Ref RuntimeDependenciesLayer
     Environment:
       # Environment variables used by every function
-      MAATAU_TABLE: !Ref MaatauTable
+      Variables:
+        DB_TABLE: !Ref MaatauTable
     Runtime: nodejs14.x
     MemorySize: 128
     Timeout: 100

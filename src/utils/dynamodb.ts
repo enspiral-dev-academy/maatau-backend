@@ -6,17 +6,17 @@ export default class CustomDynamoClient {
     table: string;
     docClient: DynamoDB.DocumentClient;
 
-    constructor(table = process.env.MAATAU_TABLE) {
+    constructor(table = process.env.DB_TABLE || 'MaatauTable') {
+      console.log('table:', table)
       const options = {
-        region: 'ap-southeast-2',
-        endpoint: ''
+        region: 'ap-southeast-2'
       }
       if (process.env.AWS_SAM_LOCAL) {
         console.log('Using local DynamoDB database')
-        options.endpoint = 'http://dynamodb:8000'
+        // options.endpoint = 'http://dynamodb:8000'
       }
       this.docClient = new DynamoDB.DocumentClient(options);
-      this.table = 'MaatauTable';
+      this.table = table;
     }
 
     async readAll() {
