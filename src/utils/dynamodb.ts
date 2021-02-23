@@ -8,7 +8,8 @@ export default class CustomDynamoClient {
 
     constructor(table = process.env.MAATAU_TABLE) {
       const options = {
-        region: 'ap-southeast-2'
+        region: 'ap-southeast-2',
+        endpoint: ''
       }
       if (process.env.AWS_SAM_LOCAL) {
         console.log('Using local DynamoDB database')

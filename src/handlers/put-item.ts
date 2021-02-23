@@ -20,19 +20,23 @@ export const putItemHandler = async (
     console.info('received:', event);
 
     // Get id and name from the body of the request
-    const body = JSON.parse(event.body)
-    const id = body.id;
-    const name = body.name;
+    // const body = JSON.parse(event.body)
+    // const id = body.id;
+    // const name = body.name;
 
-    const client = new CustomSqsClient();
-    const result = await client.send({ id, name });
+    // const client = new CustomSqsClient();
+    // const result = await client.send({ id, name });
 
-    const response = {
-        statusCode: 201,
-        body: JSON.stringify({ MessageId: result.MessageId })
-    };
+    // const response = {
+    //     statusCode: 201,
+    //     body: JSON.stringify({ MessageId: result.MessageId })
+    // };
 
-    // All log statements are written to CloudWatch
-    console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
-    return response;
+    // // All log statements are written to CloudWatch
+    // console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
+    // return response;
+    return {
+      statusCode: 201,
+      body: JSON.stringify({ MessageId: 'yo' }),
+    }
 }
