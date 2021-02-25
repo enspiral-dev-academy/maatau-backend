@@ -5,7 +5,7 @@
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  maatau
+  matatau
 
 # Transform section specifies one or more macros that AWS CloudFormation uses to process your template
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
@@ -19,7 +19,7 @@ Globals:
     Environment:
       # Environment variables used by every function
       Variables:
-        DB_TABLE: !Ref MaatauTable
+        DB_TABLE: !Ref MatatauTable
     Runtime: nodejs14.x
     MemorySize: 128
     Timeout: 100
@@ -39,9 +39,9 @@ Resources:
       Handler: dist/handlers/get-all-items.getAllItemsHandler
       Description: A simple example includes a HTTP get method to get all items from a DynamoDB table.
       Policies:
-        # Give Create/Read/Update/Delete Permissions to the MaatauTable
+        # Give Create/Read/Update/Delete Permissions to the MatatauTable
         - DynamoDBCrudPolicy:
-            TableName: !Ref MaatauTable
+            TableName: !Ref MatatauTable
       Events:
         Api:
           Type: Api
@@ -60,9 +60,9 @@ Resources:
       Handler: dist/handlers/get-by-id.getByIdHandler
       Description: A simple example includes a HTTP get method to get one item by id from a DynamoDB table.
       Policies:
-        # Give Create/Read/Update/Delete Permissions to the MaatauTable
+        # Give Create/Read/Update/Delete Permissions to the MatatauTable
         - DynamoDBCrudPolicy:
-            TableName: !Ref MaatauTable
+            TableName: !Ref MatatauTable
       Events:
         Api:
           Type: Api
@@ -97,11 +97,11 @@ Resources:
       Description: A simple example includes an SQS subscription to write queued object to DynamoDB
       Timeout: 25 # Chosen to be less than the default SQS Visibility Timeout of 30 seconds
       Policies:
-        # Give Create/Read/Update/Delete Permissions to the MaatauTable
+        # Give Create/Read/Update/Delete Permissions to the MatatauTable
         - DynamoDBCrudPolicy:
-            TableName: !Ref MaatauTable
+            TableName: !Ref MatatauTable
 
-  MaatauTable:
+  MatatauTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
       PrimaryKey:

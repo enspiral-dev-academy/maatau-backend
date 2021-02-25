@@ -1,7 +1,7 @@
 {
-  "name": "maatau",
+  "name": "matatau",
   "version": "1.0.0",
-  "description": "maatau",
+  "description": "matatau",
   "private": true,
   "dependencies": {
     "aws-sdk": "^2.848.0",
@@ -23,7 +23,7 @@
     "watch": "node_modules/typescript/bin/tsc -w --preserveWatchOutput",
     "test": "jest",
     "dc:up": "docker-compose up -d",
-    "sam:local": "sam local start-api --env-vars=env.json --docker-network maatau-backend_sam-local",
+    "sam:local": "sam local start-api --env-vars=env.json --docker-network matatau-backend_sam-local",
     "dev": "run-p dc:up sam:local watch"
   }
 }

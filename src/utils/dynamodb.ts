@@ -6,7 +6,8 @@ export default class CustomDynamoClient {
     table: string;
     docClient: DynamoDB.DocumentClient;
 
-    constructor(table = process.env.DB_TABLE || 'MaatauTable') {
+    // (we know that the || 'MatatauTable' is wrong but we'll come back to that lol)
+    constructor(table = process.env.DB_TABLE || 'MatatauTable') {
       console.log('table:', table)
       const options = {
         region: 'ap-southeast-2'
