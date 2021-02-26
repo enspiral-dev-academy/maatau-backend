@@ -1,5 +1,4 @@
 tsconfig-only-handler.json
-samconfig.toml
 dynamodb-local
 node_modules
 .aws-sam
