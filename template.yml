@@ -69,23 +69,6 @@ Resources:
           Properties:
             Path: /{id}
             Method: GET
-  # Each Lambda function is defined by properties:
-  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-
-  # This is a Lambda function config associated with the source code: put-item.js
-  # putItemFunction:
-  #   Type: AWS::Serverless::Function
-  #   Metadata:
-  #     BuildMethod: makefile
-  #   Properties:
-  #     Handler: dist/handlers/put-item.putItemHandler
-  #     Description: A simple example includes a HTTP post method to add one item to an SQS queue (to be written to a DynamoDB table later).
-  #     Events:
-  #       Api:
-  #         Type: Api
-  #         Properties:
-  #           Path: /
-  #           Method: POST
 
   # This is a Lambda function config associated with the source code: write-item.ts
   writeItemFunction:
