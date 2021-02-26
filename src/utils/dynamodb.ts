@@ -1,44 +1,45 @@
-// Create a DocumentClient that represents the query to add an item
-import AWS from 'aws-sdk';
-import DynamoDB, { DocumentClient } from 'aws-sdk/clients/dynamodb';
+const { DynamoDBClient, ScanCommand, PutItemCommand, GetItemCommand } = require("@aws-sdk/client-dynamodb");
+const REGION = "ap-southeast-2";
 
+const dbclient = new DynamoDBClient({ region: REGION, endpoint: 'http://dynamodb:8000' });
 
-// Declare some custom client just to illustrate how TS will include only used files into lambda distribution
-export default class CustomDynamoClient {
-    table: string;
-    docClient: DynamoDB.DocumentClient;
+export async function readAll() {
+  const params = {
+    TableName: process.env.DB_TABLE,
+    ProjectionExpression: "PK"
+  };
 
-    constructor(table = process.env.DB_TABLE || 'MatatauTable') {
-      console.log('table:', process.env.DB_TABLE)
-      if (process.env.AWS_SAM_LOCAL) {
-          AWS.config.dynamodb = {
-              endpoint: 'http://dynamodb:8000'
-          }
-      }
-      this.docClient = new DynamoDB.DocumentClient();
-      this.table = table;
-    }
-
-    async readAll() {
-        const data = await this.docClient.scan({ TableName: this.table }).promise();
-        return data.Items;
-    }
-
-    async read(id: any) {
-        var params = {
-            TableName : this.table,
-            Key: { PK: id },
-        };
-        const data = await this.docClient.get(params).promise();
-        return data.Item;
-    }
-
-    async write(Item: object) {
-        const params = {
-            TableName: this.table,
-            Item,
-        };
-
-        return await this.docClient.put(params).promise();
-    }
+  try {
+    const data = await dbclient.send(new ScanCommand(params));
+    return data.Items
+  } catch (err) {
+    console.log("Error", err);
+  }
 }
+
+export async function write(item: object) {
+  const params = {
+    TableName: process.env.DB_TABLE,
+    Item: item
+  }
+  try {
+    const data = await dbclient.send(new PutItemCommand(params));
+    console.info('data:', data);
+    return data
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export async function read (id: any) {
+  const params = {
+    TableName: process.env.DB_TABLE,
+    Key: {
+      PK: { S: id },
+    },
+    ProjectionExpression: "PK, quote",
+  };
+  const data = await dbclient.send(new GetItemCommand(params));
+  console.log("Success", data.Item);
+  return data.Item;
+};

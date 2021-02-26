@@ -1,24 +1,37 @@
 import 'source-map-support/register';
-import { SQSEvent } from 'aws-lambda';
+import {
+    APIGatewayProxyEvent,
+    APIGatewayProxyResult
+} from "aws-lambda";
 
-// Create clients and set shared const values outside of the handler.
-import CustomDynamoClient from '../utils/dynamodb';
+import { write } from '../utils/dynamodb';
 
-/**
- * A simple example includes a SQS queue listener to untie HTTP POST API from “heavy” write to DB.
- */
 export const writeItemHandler = async (
-    event: SQSEvent,
-) => {
-    console.info('Received from SQS:', event);
+  event: APIGatewayProxyEvent,
+): Promise<APIGatewayProxyResult> => {
+    console.info('the event!:', event);
 
-    for (const record of event.Records) {
-        const body = JSON.parse(record.body);
-        const item = { id: body.id, name: body.name };
+    let response;
+    if (event.body) {
+      const body = JSON.parse(event.body);
+      const item = { PK: { S: body.id }, quote: { S: body.quote } };
 
-        const client = new CustomDynamoClient();
-        await client.write(item);
+      const res = await write(item);
 
-        console.info('Written to DynamoDB:', item)
+      console.info('Written to DynamoDB:', res)
+
+      response = {
+          statusCode: 200,
+          body: JSON.stringify(item)
+      };
+    } else {
+        response = {
+            statusCode: 419,
+            body: 'something about teapots'
+        }
     }
+
+    // All log statements are written to CloudWatch
+    console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
+    return response;
 }

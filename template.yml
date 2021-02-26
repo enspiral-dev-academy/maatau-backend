@@ -100,6 +100,13 @@ Resources:
         # Give Create/Read/Update/Delete Permissions to the MatatauTable
         - DynamoDBCrudPolicy:
             TableName: !Ref MatatauTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: POST
+
 
   MatatauTable:
     Type: AWS::Serverless::SimpleTable

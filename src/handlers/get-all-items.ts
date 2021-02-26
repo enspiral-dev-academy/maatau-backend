@@ -4,12 +4,8 @@ import {
     APIGatewayProxyResult
 } from "aws-lambda";
 
-// Create clients and set shared const values outside of the handler.
-import CustomDynamoClient from '../utils/dynamodb';
+import { readAll } from '../utils/dynamodb';
 
-/**
- * A simple example includes a HTTP get method to get all items from a DynamoDB table.
- */
 export const getAllItemsHandler = async (
     event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
@@ -19,8 +15,7 @@ export const getAllItemsHandler = async (
     // All log statements are written to CloudWatch
     console.info('received:', event);
 
-    const client = new CustomDynamoClient();
-    const items = await client.readAll();
+    const items = await readAll();
 
     const response = {
         statusCode: 200,

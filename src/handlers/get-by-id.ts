@@ -3,12 +3,9 @@ import {
     APIGatewayProxyEvent,
     APIGatewayProxyResult
 } from "aws-lambda";
-// Create clients and set shared const values outside of the handler.
-import CustomDynamoClient from '../utils/dynamodb';
 
-/**
- * A simple example includes a HTTP get method to get one item by id from a DynamoDB table.
- */
+import { read } from '../utils/dynamodb';
+
 export const getByIdHandler = async (
   event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
@@ -21,8 +18,7 @@ export const getByIdHandler = async (
   // Get id from pathParameters from APIGateway because of `/{id}` at template.yml
   const id = event.pathParameters?.id;
 
-  const client = new CustomDynamoClient();
-  const item = await client.read(id);
+  const item = await read(id);
 
   const response = {
     statusCode: 200,
