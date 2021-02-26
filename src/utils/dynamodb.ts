@@ -1,7 +1,13 @@
 const { DynamoDBClient, ScanCommand, PutItemCommand, GetItemCommand } = require("@aws-sdk/client-dynamodb");
+
 const REGION = "ap-southeast-2";
 
-const dbclient = new DynamoDBClient({ region: REGION, endpoint: 'http://dynamodb:8000' });
+let dbclient;
+if (process.env.AWS_SAM_LOCAL) {
+  dbclient = new DynamoDBClient({ region: REGION, endpoint: 'http://dynamodb:8000' });
+} else {
+  dbclient = new DynamoDBClient({ region: REGION });
+}
 
 export async function readAll() {
   const params = {
