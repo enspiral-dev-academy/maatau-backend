@@ -1,22 +1,21 @@
 // Create a DocumentClient that represents the query to add an item
-import DynamoDB from 'aws-sdk/clients/dynamodb';
+import AWS from 'aws-sdk';
+import DynamoDB, { DocumentClient } from 'aws-sdk/clients/dynamodb';
+
 
 // Declare some custom client just to illustrate how TS will include only used files into lambda distribution
 export default class CustomDynamoClient {
     table: string;
     docClient: DynamoDB.DocumentClient;
 
-    // (we know that the || 'MatatauTable' is wrong but we'll come back to that lol)
     constructor(table = process.env.DB_TABLE || 'MatatauTable') {
-      console.log('table:', table)
-      const options = {
-        region: 'ap-southeast-2'
-      }
+      console.log('table:', process.env.DB_TABLE)
       if (process.env.AWS_SAM_LOCAL) {
-        console.log('Using local DynamoDB database')
-        // options.endpoint = 'http://dynamodb:8000'
+          AWS.config.dynamodb = {
+              endpoint: 'http://dynamodb:8000'
+          }
       }
-      this.docClient = new DynamoDB.DocumentClient(options);
+      this.docClient = new DynamoDB.DocumentClient();
       this.table = table;
     }
 
